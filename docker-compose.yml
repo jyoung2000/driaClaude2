@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  driaclaude2:
+    build: .
+    container_name: driaclaude2
+    ports:
+      - "4144:4144"
+    environment:
+      - PORT=4144
+      - PUID=99
+      - PGID=100
+      - TZ=UTC
+      - TRANSFORMERS_CACHE=/home/appuser/.cache/huggingface
+    volumes:
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
+      - ./voices:/app/voices
+      - ./models:/home/appuser/.cache/huggingface
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
